@@ -3553,13 +3553,13 @@
 /* Main */
 
 	#main {
-		background: lightblue url("http://api.thumbr.it/whitenoise-361x370.png?") repeat fixed center; 
+		background: lightblue url("../../images/whitenoise.png") repeat fixed center; 
 		background-color: #ffffff;
 		position: relative;
 		margin: 0 auto;
 		width: calc(100% - 4rem);
 		max-width: 72rem;
-		z-index: 2;
+		z-index: 3;
 	}
 
 		#main > * {
@@ -4351,7 +4351,7 @@
 		transition: transform 0.5s ease, box-shadow 0.5s ease, visibility 0.5s;
 		display: none;
 		-webkit-overflow-scrolling: touch;
-		background: lightblue url("http://api.thumbr.it/whitenoise-361x370.png?") repeat fixed center; 
+		background: lightblue url("../../images/whitenoise.png") repeat fixed center; 
 		box-shadow: none;
 		color: #212931;
 		height: 100%;
