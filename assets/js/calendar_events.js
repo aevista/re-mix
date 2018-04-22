@@ -94,17 +94,38 @@ function listEvents(events) {
             console.log(item);
             date = (item.start.date) ? item.start.date : item.start.dateTime.split('T')[0];
             li = document.createElement('li');
-            li.appendChild(document.createTextNode(date + ' - '));
+            p = document.createElement("p");
+            li.appendChild(p.appendChild(document.createTextNode(dateName(date))));
+            li.appendChild(document.createElement("br"));
             a = document.createElement('a');
             a.setAttribute('href', item.htmlLink);
             a.appendChild(document.createTextNode(item.summary));
             li.appendChild(a);
+            if (item.description != undefined) {
+                p = document.createElement('p');
+                p.appendChild(document.createTextNode(item.description));
+                li.appendChild(p);
+            }
+            if (item.location != undefined) {
+                p = document.createElement('p');
+                p.appendChild(document.createTextNode(item.location));
+                li.appendChild(p);
+            }
             ul.appendChild(li);
         }
         calDiv.appendChild(ul);
     } else {
         document.createTextNode('No upcoming events found...');
     }
+}
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
+
+function dateName(date) {
+    var d = date.split('-');
+    return monthNames[parseInt(d[1])] + " " + d[2] + " " + d[0];
 }
 
 /**
