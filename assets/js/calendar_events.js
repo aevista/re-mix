@@ -102,8 +102,13 @@ function listEvents(events) {
             a.appendChild(document.createTextNode(item.summary));
             li.appendChild(a);
             if (item.description != undefined) {
+                var img = document.createElement("img");
+                img.setAttribute("src", grabImageUrl(item.description));
+                img.setAttribute("height", "100");
+                img.setAttribute("width", "100");
+                li.appendChild(img);
                 p = document.createElement('p');
-                p.appendChild(document.createTextNode(item.description));
+                p.appendChild(document.createTextNode(grabImageUrl(item.description)));
                 li.appendChild(p);
             }
             if (item.location != undefined) {
@@ -126,6 +131,12 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 function dateName(date) {
     var d = date.split('-');
     return monthNames[parseInt(d[1])] + " " + d[2] + " " + d[0];
+}
+
+function grabImageUrl(description) {
+    console.log(description);
+    console.log(description.match('(((https?:\/\/)|(www\.))[^"]+)'));
+    return description.match('(((https?:\/\/)|(www\.))[^"]+)')[0];
 }
 
 /**
