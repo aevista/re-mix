@@ -3036,12 +3036,6 @@
 			background-attachment: scroll,								scroll,														scroll;
 			z-index: -1;
 		}
-
-		#wrapper > .bg.fixed {
-			position: fixed;
-			width: 100vw;
-			height: 115vh;
-		}
 		
 		#wrapper.fade-in:before {
 			-moz-pointer-events: none;
