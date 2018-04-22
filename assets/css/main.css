@@ -3022,9 +3022,9 @@
 	}
 
 		#wrapper > .bg {
-			position: fixed;
+			position: absolute;
 			width: 100vw;
-			height: 100vh;
+			height: 115vh;
 			top: 0;
 			left: 0;
 			background-color: #212931;
@@ -3036,7 +3036,7 @@
 			background-attachment: scroll,								scroll,														scroll;
 			z-index: -1;
 		}
-
+		
 		#wrapper.fade-in:before {
 			-moz-pointer-events: none;
 			-webkit-pointer-events: none;
