@@ -83,39 +83,35 @@ function formatDateTime(now) {
 function listEvents(events) {
     var calDiv = document.getElementById('cal');
     if (events.items.length > 0) {
-        var date = '';
-        var li = '';
-        var item = '';
-        var a = '';
         // build the html... 
         var ul = document.createElement('ul');
         for (var i = 0; i < events.items.length; i++) {
-            item = events.items[i];
+            let item = events.items[i];
             console.log(item);
-            date = (item.start.date) ? item.start.date : item.start.dateTime.split('T')[0];
-            li = document.createElement('li');
-            p = document.createElement("p");
-            li.appendChild(p.appendChild(document.createTextNode(dateName(date))));
-            li.appendChild(document.createElement("br"));
-            a = document.createElement('a');
-            a.setAttribute('href', item.htmlLink);
-            a.appendChild(document.createTextNode(item.summary));
-            li.appendChild(a);
-            if (item.description != undefined) {
-                var img = document.createElement("img");
-                img.setAttribute("src", grabImageUrl(item.description));
-                img.setAttribute("height", "100");
-                img.setAttribute("width", "100");
-                li.appendChild(img);
-                p = document.createElement('p');
-                p.appendChild(document.createTextNode(grabImageUrl(item.description)));
-                li.appendChild(p);
+            let date = (item.start.date) ? item.start.date : item.start.dateTime.split('T')[0];
+            if (item.start.dateTime) {
+                console.log(new Date(item.start.dateTime));
             }
-            if (item.location != undefined) {
-                p = document.createElement('p');
-                p.appendChild(document.createTextNode(item.location));
-                li.appendChild(p);
+            let li = document.createElement('li');
+            li.appendChild(
+                document.createElement("p").appendChild(
+                    document.createTextNode(dateName(date) + " - ")
+                )
+            );
+            if (item.summary) {
+                li.appendChild(document.createTextNode(item.summary));
             }
+            if (item.description) {
+                let description = document.createElement('p');
+                description.appendChild(document.createTextNode(item.description));
+                li.appendChild(description);
+            }
+            if (item.location) {
+                let location = document.createElement('p');
+                location.appendChild(document.createTextNode(item.location));
+                li.appendChild(location);
+            }
+
             ul.appendChild(li);
         }
         calDiv.appendChild(ul);
@@ -130,13 +126,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 
 function dateName(date) {
     var d = date.split('-');
-    return monthNames[parseInt(d[1])] + " " + d[2] + " " + d[0];
-}
-
-function grabImageUrl(description) {
-    console.log(description);
-    console.log(description.match('(((https?:\/\/)|(www\.))[^"]+)'));
-    return description.match('(((https?:\/\/)|(www\.))[^"]+)')[0];
+    return monthNames[parseInt(d[1])] + " " + d[2] + ", " + d[0];
 }
 
 /**
