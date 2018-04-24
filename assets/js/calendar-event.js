@@ -148,7 +148,7 @@ function listEvents(events) {
             let location = document.createElement('a');
             location.classList.add("location");
             location.classList.add('popup-gmaps');
-            location.href=`${mapsApiRequest(item.location)}`
+            location.href=`${mapsRequest(item.location)}`
             location.appendChild(document.createTextNode(item.location));
             event.appendChild(location);
         }
@@ -157,31 +157,26 @@ function listEvents(events) {
     }
 }
 
-function mapsApiRequest(address) {
+function mapsRequest(address) {
     return `https://maps.google.com/maps?q=${address.split(' ').join('+')}`
 }
 
 
-/**
- * javascript native async requester.
- *
- * @param {string} request url
- * @param {function} callback function to handle response
- * @returns {json} response
- */
-function httpGet(url, callback) {
-    var oReq = new XMLHttpRequest();
-    oReq.open("GET", url, true);
-    oReq.onreadystatechange = function(oEvent) {
-        if (oReq.readyState === 4 && oReq.status === 200) {
-            // callback when we get response... 
-            return callback(JSON.parse(oReq.responseText));
-        } else {
-            console.log("Response: ", oReq.status);
+$(document).ready(function() {
+    $.ajax({
+        url: calender_request, 
+        dataType: 'json',
+        success: (events) => listEvents(events),
+        complete: () => {
+            $('.popup-gmaps').magnificPopup({
+                disableOn: 700,
+                type: 'iframe',
+                mainClass: 'mfp-fade',
+                removalDelay: 160,
+                preloader: false,
+        
+                fixedContentPos: false
+            });
         }
-    };
-    oReq.send();
-}
-
-// build the request, make the async call, and callback listEents with results...
-httpGet(calender_request, listEvents);
+    });
+});
