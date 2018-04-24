@@ -28,7 +28,7 @@ var CALENDAR_ID = 'aevistax@gmail.com';
 var now = new Date();
 var from = new Date(); 
 var to = new Date();
-from.setMonth(now.getMonth() - 2);
+from.setMonth(now.getMonth() - 1);
 to.setMonth(now.getMonth() + 1);
 console.log(to);
 
@@ -38,7 +38,7 @@ console.log(to);
  */
 var request = 'https://www.googleapis.com/calendar/v3/calendars/' +
         CALENDAR_ID +
-        '/events?singleEvents=true&orderBy=startTime&fields=items(description%2Csummary%2Clocation%2Cstart%2ChtmlLink%2Cattachments)' + 
+        '/events?singleEvents=true&orderBy=startTime&fields=items(summary%2Clocation%2Cstart%2ChtmlLink)' + 
         '&timeMin=' + formatDateTime(from) +
         '&timeMax=' + formatDateTime(to) +
         '&orderBy=startTime' +
@@ -80,53 +80,78 @@ function formatDateTime(now) {
  *
  * @param {Object} JSON object of event results
  */
-function listEvents(events) {
-    var calDiv = document.getElementById('cal');
-    if (events.items.length > 0) {
-        // build the html... 
-        var ul = document.createElement('ul');
-        for (var i = 0; i < events.items.length; i++) {
-            let item = events.items[i];
-            console.log(item);
-            let date = (item.start.date) ? item.start.date : item.start.dateTime.split('T')[0];
-            if (item.start.dateTime) {
-                console.log(new Date(item.start.dateTime));
-            }
-            let li = document.createElement('li');
-            li.appendChild(
-                document.createElement("p").appendChild(
-                    document.createTextNode(dateName(date) + " - ")
-                )
-            );
-            if (item.summary) {
-                li.appendChild(document.createTextNode(item.summary));
-            }
-            if (item.description) {
-                let description = document.createElement('p');
-                description.appendChild(document.createTextNode(item.description));
-                li.appendChild(description);
-            }
-            if (item.location) {
-                let location = document.createElement('p');
-                location.appendChild(document.createTextNode(item.location));
-                li.appendChild(location);
-            }
-
-            ul.appendChild(li);
-        }
-        calDiv.appendChild(ul);
-    } else {
-        document.createTextNode('No upcoming events found...');
-    }
-}
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+"July", "August", "September", "October", "November", "December"
 ];
 
-function dateName(date) {
-    var d = date.split('-');
-    return monthNames[parseInt(d[1])] + " " + d[2] + ", " + d[0];
+function listEvents(events) {
+    var eventsDiv = document.getElementById('events');
+    if (events.items.length == 0) {
+         document.createTextNode('No upcoming events found...');
+         return;
+    }
+    
+
+    let upcoming = Object.keys(events.items).reduce((ds, k) =>  {
+        let item = events.items[k];
+        ds[k] = new Date((item.start.date) ? item.start.date : item.start.dateTime);
+        return ds;
+    }, new Array(events.items.length))
+    .find((date) => date.getMonth() >= now.getMonth() && date.getDate() >= now.getDate());
+
+    console.log(upcoming);
+
+    for (var i = events.items.length - 1; i >= 0; i--) {
+        let item = events.items[i];
+        let event = document.createElement('div')
+        event.classList.add("event");
+        event.classList.add("line")
+        console.log(item);
+
+        let date = new Date((item.start.date) ? item.start.date : item.start.dateTime);
+        
+        if (date.getMonth() === upcoming.getMonth() && 
+            date.getDate() === upcoming.getDate() &&
+            date.getFullYear() === upcoming.getFullYear()
+        ) {
+            console.log("here");
+            event.classList.add("upcoming");
+        }
+        
+        let name = document.createElement("div");
+        name.classList.add("name")
+        let dateString = `${monthNames[date.getMonth()]} ${date.getDate()}`;
+        let hour = `${(date.getHours() +1) % 13}`;
+        let min = `${date.getMinutes()}`.length === 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
+        //let summary = item.summary ? item.summary : "";
+        name.appendChild(document.createTextNode(`${dateString} - ${hour}:${min}`));
+        event.appendChild(name);
+
+        if (item.summary) {
+            let summary = document.createElement('div');
+            summary.classList.add("description");
+            summary.appendChild(document.createTextNode(item.summary));
+            event.appendChild(summary);
+        }
+        
+            
+        /*if (item.description) {
+            let description = document.createElement('div');
+            description.classList.add("description");
+            description.appendChild(document.createTextNode(item.description));
+            event.appendChild(description);
+        }
+        */
+        if (item.location) {
+            let location = document.createElement('div');
+            location.classList.add("location");
+            location.appendChild(document.createTextNode(item.location));
+            event.appendChild(location);
+        }
+
+        eventsDiv.appendChild(event);
+    }
 }
 
 /**
