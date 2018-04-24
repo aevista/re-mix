@@ -36,7 +36,7 @@ console.log(to);
  * Build a Google Calendar API http request 
  * {@link https://developers.google.com/google-apps/calendar/v3/reference/events}
  */
-var request = 'https://www.googleapis.com/calendar/v3/calendars/' +
+var calender_request = 'https://www.googleapis.com/calendar/v3/calendars/' +
         CALENDAR_ID +
         '/events?singleEvents=true&orderBy=startTime&fields=items(summary%2Clocation%2Cstart%2ChtmlLink)' + 
         '&timeMin=' + formatDateTime(from) +
@@ -44,6 +44,10 @@ var request = 'https://www.googleapis.com/calendar/v3/calendars/' +
         '&orderBy=startTime' +
         '&key=' +
         API_KEY;
+
+function mapsRequest(address) {
+    return `https://maps.googleapis.com/maps/api/geocode/json?address=${address.split(' ').join('+')}&key=${API_KEY}`
+}
 
 /**
  * add a leading zero to a number
@@ -86,10 +90,12 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 
 function listEvents(events) {
-    if (events.items.length == 0) {
+    if (events.items.length === 0 || !document.getElementById('events')) {
          document.createTextNode('No upcoming events found...');
          return;
     }
+
+    let eventsDiv = document.getElementById('events');
     
     let upcoming = Object.keys(events.items).reduce((ds, k) =>  {
         let item = events.items[k];
@@ -114,7 +120,6 @@ function listEvents(events) {
             date.getFullYear() === upcoming.getFullYear()
         ) {
             
-            console.log("here");
             event.classList.add("upcoming");
             let upcomingDiv = document.createElement("div");
             upcomingDiv.style.float='clear';
@@ -140,17 +145,22 @@ function listEvents(events) {
         }
         
         if (item.location) {
-            let location = document.createElement('div');
+            let location = document.createElement('a');
             location.classList.add("location");
+            location.classList.add('popup-gmaps');
+            location.href=`${mapsApiRequest(item.location)}`
             location.appendChild(document.createTextNode(item.location));
             event.appendChild(location);
         }
 
-        if (document.getElementById('events')) {
-            document.getElementById('events').appendChild(event);
-        } 
+        eventsDiv.appendChild(event);
     }
 }
+
+function mapsApiRequest(address) {
+    return `https://maps.google.com/maps?q=${address.split(' ').join('+')}`
+}
+
 
 /**
  * javascript native async requester.
@@ -174,4 +184,4 @@ function httpGet(url, callback) {
 }
 
 // build the request, make the async call, and callback listEents with results...
-httpGet(request, listEvents);
+httpGet(calender_request, listEvents);

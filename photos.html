@@ -12,6 +12,34 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/magnific-popup.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			.image-source-link {
+				color: #98C3D1;
+			}
+
+			.mfp-with-zoom .mfp-container,
+			.mfp-with-zoom.mfp-bg {
+				opacity: 0;
+				-webkit-backface-visibility: hidden;
+				/* ideally, transition speed should match zoom duration */
+				-webkit-transition: all 0.3s ease-out; 
+				-moz-transition: all 0.3s ease-out; 
+				-o-transition: all 0.3s ease-out; 
+				transition: all 0.3s ease-out;
+			}
+
+			.mfp-with-zoom.mfp-ready .mfp-container {
+					opacity: 1;
+			}
+			.mfp-with-zoom.mfp-ready.mfp-bg {
+					opacity: 0.8;
+			}
+
+			.mfp-with-zoom.mfp-removing .mfp-container, 
+			.mfp-with-zoom.mfp-removing.mfp-bg {
+				opacity: 0;
+			}
+		</style>
 	</head>
 	<body class="is-loading">
 
@@ -44,32 +72,32 @@
 
 				<!-- Main -->
 					<div id="main">
-
-						<div class="zoom-gallery">
-							<!--
-						
-							Width/height ratio of thumbnail and the main image must match to avoid glitches.
-						
-							If ratios are different, you may add CSS3 opacity transition to the main image to make the change less noticable.
-						
-								-->
-							<a href="images/photos-page/1936549_179339867564_1299580_n.jpg" title="1">
-								<img src="images/photos-page/1936549_179339867564_1299580_n.jpg" width="250" height="250" style="object-fit: cover; object-position: 0 0">
-							</a>
-							<a href="images/photos-page/265346_10150319259432565_2787510_o.jpg" title="2">
-								<img src="images/photos-page/265346_10150319259432565_2787510_o.jpg"  width="250" height="250" style="object-fit: cover; object-position: 0 0">
-							</a>
-							<a href="images/photos-page/4245_102588867564_5280145_n.jpg" title="3">
-								<img src="images/photos-page/4245_102588867564_5280145_n.jpg" width="250" height="250" style="object-fit: cover; object-position: 0 0">
-							</a>
-							<a href="images/photos-page/4676_109568327564_5616739_n.jpg" title="4">
-								<img src="images/photos-page/4676_109568327564_5616739_n.jpg"  width="250" height="250" style="object-fit: cover; object-position: 0 0">
-							</a>
-							<a href="images/photos-page/561171_10150857494397565_1844079643_n.jpg" title="5">
-								<img src="images/photos-page/561171_10150857494397565_1844079643_n.jpg"  width="250" height="250" style="object-fit: cover; object-position: 0 0">
-							</a>
-						</div>
-
+						<center>
+							<div class="zoom-gallery">
+								<!--
+							
+								Width/height ratio of thumbnail and the main image must match to avoid glitches.
+							
+								If ratios are different, you may add CSS3 opacity transition to the main image to make the change less noticable.
+							
+									-->
+								<a href="images/photos-page/1936549_179339867564_1299580_n.jpg" title="1">
+									<img src="images/photos-page/1936549_179339867564_1299580_n.jpg" width="200vw" height="250" style="object-fit: cover; object-position: 0 0">
+								</a>
+								<a href="images/photos-page/265346_10150319259432565_2787510_o.jpg" title="2">
+									<img src="images/photos-page/265346_10150319259432565_2787510_o.jpg"  width="200vw" height="250" style="object-fit: cover; object-position: 0 0">
+								</a>
+								<a href="images/photos-page/4245_102588867564_5280145_n.jpg" title="3">
+									<img src="images/photos-page/4245_102588867564_5280145_n.jpg" width="200vw" height="250" style="object-fit: cover; object-position: 0 0">
+								</a>
+								<a href="images/photos-page/4676_109568327564_5616739_n.jpg" title="4">
+									<img src="images/photos-page/4676_109568327564_5616739_n.jpg"  width="200vw" height="250" style="object-fit: cover; object-position: 0 0">
+								</a>
+								<a href="images/photos-page/561171_10150857494397565_1844079643_n.jpg" title="5">
+									<img src="images/photos-page/561171_10150857494397565_1844079643_n.jpg"  width="200vw" height="250" style="object-fit: cover; object-position: 0 0">
+								</a>
+							</div>
+						</center>
 					</div>
 
 				<!-- Copyright -->
@@ -80,40 +108,40 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script src="assets/js/jquery.magnific-popup.min.js"></script>
-			<script>
-				$(document).ready(function() {
-					$('.zoom-gallery').magnificPopup({
-						delegate: 'a',
-						type: 'image',
-						closeOnContentClick: false,
-						closeBtnInside: false,
-						mainClass: 'mfp-with-zoom mfp-img-mobile',
-						image: {
-							verticalFit: true,
-							titleSrc: function(item) {
-								return item.el.attr('title') + ' &middot; <a class="image-source-link" href="'+item.el.attr('data-source')+'" target="_blank">image source</a>';
-							}
-						},
-						gallery: {
-							enabled: true
-						},
-						zoom: {
-							enabled: true,
-							duration: 300, // don't foget to change the duration also in CSS
-							opener: function(element) {
-								return element.find('img');
-							}
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.magnific-popup.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('.zoom-gallery').magnificPopup({
+					delegate: 'a',
+					type: 'image',
+					closeOnContentClick: false,
+					closeBtnInside: false,
+					mainClass: 'mfp-with-zoom mfp-img-mobile',
+					image: {
+						verticalFit: true,
+						titleSrc: function(item) {
+							return item.el.attr('title') + ' &middot; <a class="image-source-link" href="'+item.el.attr('data-source')+'" target="_blank">image source</a>';
 						}
-						
-					});
+					},
+					gallery: {
+						enabled: true
+					},
+					zoom: {
+						enabled: true,
+						duration: 300, // don't foget to change the duration also in CSS
+						opener: function(element) {
+							return element.find('img');
+						}
+					}
+
 				});
-			</script>
+			});
+		</script>
 	</body>
 </html>
