@@ -148,9 +148,7 @@ function listEvents(events) {
 
         if (document.getElementById('events')) {
             document.getElementById('events').appendChild(event);
-        } else if (document.getElementById('upcoming') && event.classList.contains('upcoming')) {
-            document.getElementById('upcoming').appendChild(event);
-        }
+        } 
     }
 }
 
