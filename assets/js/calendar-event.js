@@ -117,6 +117,11 @@ function listEvents(events) {
         ) {
             console.log("here");
             event.classList.add("upcoming");
+            let upcomingDiv = document.createElement("div");
+            upcomingDiv.style.float='clear';
+            upcomingDiv.style.marginRight='50%';
+            upcomingDiv.innerHTML="Upcoming";
+            event.appendChild(upcomingDiv);
         }
         
         let name = document.createElement("div");
@@ -130,7 +135,7 @@ function listEvents(events) {
 
         if (item.summary) {
             let summary = document.createElement('div');
-            summary.classList.add("description");
+            summary.classList.add("summary");
             summary.appendChild(document.createTextNode(item.summary));
             event.appendChild(summary);
         }
