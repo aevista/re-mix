@@ -86,13 +86,11 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 
 function listEvents(events) {
-    var eventsDiv = document.getElementById('events');
     if (events.items.length == 0) {
          document.createTextNode('No upcoming events found...');
          return;
     }
     
-
     let upcoming = Object.keys(events.items).reduce((ds, k) =>  {
         let item = events.items[k];
         ds[k] = new Date((item.start.date) ? item.start.date : item.start.dateTime);
@@ -115,11 +113,12 @@ function listEvents(events) {
             date.getDate() === upcoming.getDate() &&
             date.getFullYear() === upcoming.getFullYear()
         ) {
+            
             console.log("here");
             event.classList.add("upcoming");
             let upcomingDiv = document.createElement("div");
             upcomingDiv.style.float='clear';
-            upcomingDiv.style.marginRight='50%';
+            upcomingDiv.style.marginRight='60%';
             upcomingDiv.innerHTML="Upcoming";
             event.appendChild(upcomingDiv);
         }
@@ -140,14 +139,6 @@ function listEvents(events) {
             event.appendChild(summary);
         }
         
-            
-        /*if (item.description) {
-            let description = document.createElement('div');
-            description.classList.add("description");
-            description.appendChild(document.createTextNode(item.description));
-            event.appendChild(description);
-        }
-        */
         if (item.location) {
             let location = document.createElement('div');
             location.classList.add("location");
@@ -155,7 +146,11 @@ function listEvents(events) {
             event.appendChild(location);
         }
 
-        eventsDiv.appendChild(event);
+        if (document.getElementById('events')) {
+            document.getElementById('events').appendChild(event);
+        } else if (document.getElementById('upcoming') && event.classList.contains('upcoming')) {
+            document.getElementById('upcoming').appendChild(event);
+        }
     }
 }
 
