@@ -30,7 +30,6 @@ var from = new Date();
 var to = new Date();
 from.setDate(now.getDate() - 12);
 to.setDate(now.getDate() + 12);
-console.log(to);
 
 /**
  * Build a Google Calendar API http request 
@@ -92,13 +91,13 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
 function listEvents(events) {
-    if (events.items.length === 0 || !document.getElementById('events')) {
-         document.createTextNode('No upcoming events found...');
-         return;
+    let upcomingId = document.getElementById('upcoming');
+    let eventsId = document.getElementById('events');
+    
+    if (events.items.length === 0 && (!upcomingId || !eventsId)) {
+        return;
     }
 
-    let eventsDiv = document.getElementById('events');
-    
     let upcoming = Object.keys(events.items).reduce((ds, k) =>  {
         let item = events.items[k];
         ds[k] = new Date((item.start.date) ? item.start.date : item.start.dateTime);
@@ -106,7 +105,7 @@ function listEvents(events) {
     }, new Array(events.items.length))
     .find((date) => date.getMonth() >= now.getMonth() && date.getDate() >= now.getDate());
 
-    console.log(upcoming);
+    console.log(events.items);
 
     for (var i = events.items.length - 1; i >= 0; i--) {
         let item = events.items[i];
@@ -157,8 +156,16 @@ function listEvents(events) {
             location.appendChild(document.createTextNode(item.location));
             event.appendChild(location);
         }
-
-        eventsDiv.appendChild(event);
+        if (document.getElementById("upcoming") && event.classList.contains("upcoming")) {
+            document.getElementById("up")
+        }
+        
+        if (upcomingId && event.classList.contains('upcoming')) {
+            upcomingId.appendChild(event);
+        }
+        if (eventsId) {
+            eventsId.appendChild(event);
+        }   
     }
 }
 
