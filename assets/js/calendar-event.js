@@ -15,14 +15,14 @@
  *
  * create this api at: https: //console.developers.google.com
  */
-var API_KEY = 'AIzaSyBE1-e9INUTNqGajutEc-FKa4-q9nQRrWk';
+var API_KEY = 'AIzaSyChgYV6MW8mWFEVQqvkuUcXjjH3vECx0Ww';
 
 /**
  * A google calendar ID
  *
  * get the id from your google calendar > settings
  */
-var CALENDAR_ID = 'aevistax@gmail.com';
+var CALENDAR_ID = '2toneband@gmail.com';
 
 /** current date object */
 var now = new Date();
