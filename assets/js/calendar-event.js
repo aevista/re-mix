@@ -89,6 +89,8 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"
 ];
 
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+
 function listEvents(events) {
     if (events.items.length === 0 || !document.getElementById('events')) {
          document.createTextNode('No upcoming events found...');
@@ -130,7 +132,7 @@ function listEvents(events) {
         
         let name = document.createElement("div");
         name.classList.add("name")
-        let dateString = `${monthNames[date.getMonth()]} ${date.getDate()}`;
+        let dateString = `${datNames[date.getDay()] monthNames[date.getMonth()]} ${date.getDate()}`;
         let hour = `${(date.getHours() +1) % 13}`;
         let min = `${date.getMinutes()}`.length === 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
         //let summary = item.summary ? item.summary : "";
