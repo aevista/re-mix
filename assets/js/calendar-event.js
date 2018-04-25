@@ -15,7 +15,7 @@
  *
  * create this api at: https: //console.developers.google.com
  */
-var API_KEY = 'AIzaSyChgYV6MW8mWFEVQqvkuUcXjjH3vECx0Ww';
+var API_KEY = 'AIzaSyBE1-e9INUTNqGajutEc-FKa4-q9nQRrWk';
 
 /**
  * A google calendar ID
@@ -112,7 +112,6 @@ function listEvents(events) {
         let item = events.items[i];
         let event = document.createElement('div')
         event.classList.add("event");
-        event.classList.add("line")
         console.log(item);
 
         let date = new Date((item.start.date) ? item.start.date : item.start.dateTime);
@@ -126,8 +125,12 @@ function listEvents(events) {
             let upcomingDiv = document.createElement("div");
             upcomingDiv.style.float='clear';
             upcomingDiv.style.marginRight='60%';
-            upcomingDiv.innerHTML="Upcoming";
+            upcomingH = document.createElement("h2");
+            upcomingH.innerHTML = "Upcoming";
+            upcomingDiv.appendChild(upcomingH);
             event.appendChild(upcomingDiv);
+        } else {
+            event.classList.add("line")
         }
         
         let name = document.createElement("div");
