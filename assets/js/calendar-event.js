@@ -132,7 +132,7 @@ function listEvents(events) {
         
         let name = document.createElement("div");
         name.classList.add("name")
-        let dateString = `${dayNames[date.getDay()] monthNames[date.getMonth()]} ${date.getDate()}`;
+        let dateString = `${dayNames[date.getDay()]} ${monthNames[date.getMonth()]} ${date.getDate()}`;
         let hour = `${(date.getHours() +1) % 13}`;
         let min = `${date.getMinutes()}`.length === 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
         //let summary = item.summary ? item.summary : "";
