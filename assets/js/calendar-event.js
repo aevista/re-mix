@@ -28,8 +28,8 @@ var CALENDAR_ID = '2toneband@gmail.com';
 var now = new Date();
 var from = new Date(); 
 var to = new Date();
-from.setMonth(now.getMonth() - 1);
-to.setMonth(now.getMonth() + 1);
+from.setDate(now.getDate() - 12);
+to.setDate(now.getDate() + 12);
 console.log(to);
 
 /**
