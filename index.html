@@ -11,7 +11,35 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/calendar-event.css" />
+		<link rel="stylesheet" href="assets/css/magnific-popup.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+				.mfp-fade.mfp-bg {
+					opacity: 0;
+					-webkit-transition: all 0.15s ease-out; 
+					-moz-transition: all 0.15s ease-out; 
+					transition: all 0.15s ease-out;
+				}
+				.mfp-fade.mfp-bg.mfp-ready {
+					opacity: 0.8;
+				}
+				.mfp-fade.mfp-bg.mfp-removing {
+					opacity: 0;
+				}
+	
+				.mfp-fade.mfp-wrap .mfp-content {
+					opacity: 0;
+					-webkit-transition: all 0.15s ease-out; 
+					-moz-transition: all 0.15s ease-out; 
+					transition: all 0.15s ease-out;
+				}
+				.mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+					opacity: 1;
+				}
+				.mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+					opacity: 0;
+				}
+			</style>
 	</head>
 	<body class="is-loading">
 

@@ -125,7 +125,7 @@ function listEvents(events) {
             upcomingDiv.style.float='clear';
             upcomingDiv.style.marginRight='60%';
             upcomingH = document.createElement("h2");
-            upcomingH.innerHTML = "Upcoming";
+            upcomingH.innerHTML = "Upcoming Event";
             upcomingDiv.appendChild(upcomingH);
             event.appendChild(upcomingDiv);
         } else {
@@ -156,13 +156,11 @@ function listEvents(events) {
             location.appendChild(document.createTextNode(item.location));
             event.appendChild(location);
         }
-        if (document.getElementById("upcoming") && event.classList.contains("upcoming")) {
-            document.getElementById("up")
-        }
         
         if (upcomingId && event.classList.contains('upcoming')) {
             upcomingId.appendChild(event);
         }
+        
         if (eventsId) {
             eventsId.appendChild(event);
         }   
