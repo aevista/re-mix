@@ -15,7 +15,7 @@
  *
  * create this api at: https: //console.developers.google.com
  */
-var API_KEY = 'AIzaSyBE1-e9INUTNqGajutEc-FKa4-q9nQRrWk';
+var API_KEY = 'AIzaSyChgYV6MW8mWFEVQqvkuUcXjjH3vECx0Ww';
 
 /**
  * A google calendar ID
@@ -160,7 +160,7 @@ function listEvents(events) {
         if (upcomingId && event.classList.contains('upcoming')) {
             upcomingId.appendChild(event);
         }
-        
+
         if (eventsId) {
             eventsId.appendChild(event);
         }   
