@@ -15,7 +15,7 @@
  *
  * create this api at: https: //console.developers.google.com
  */
-var API_KEY = 'AIzaSyChgYV6MW8mWFEVQqvkuUcXjjH3vECx0Ww';
+var API_KEY = 'AIzaSyBE1-e9INUTNqGajutEc-FKa4-q9nQRrWk';
 
 /**
  * A google calendar ID
@@ -26,10 +26,16 @@ var CALENDAR_ID = '2toneband@gmail.com';
 
 /** current date object */
 var now = new Date();
-var from = new Date(); 
-var to = new Date();
-from.setDate(now.getDate() - 12);
-to.setDate(now.getDate() + 12);
+var from = setDate(d => d.getDate() -12, (d, k) => d.setDate(k))(now);
+var to = setDate(d => d.getMonth() + 1, (d, k) => d.setMonth(k))(now);
+
+function setDate(getCallback, setCallback) {
+    return date => {
+        let newDate = new Date(date);
+        setCallback(newDate, getCallback(date));
+        return newDate;
+    }
+}
 
 /**
  * Build a Google Calendar API http request 
@@ -41,8 +47,7 @@ var calender_request = 'https://www.googleapis.com/calendar/v3/calendars/' +
         '&timeMin=' + formatDateTime(from) +
         '&timeMax=' + formatDateTime(to) +
         '&orderBy=startTime' +
-        '&key=' +
-        API_KEY;
+        '&key=' + API_KEY;
 
 function mapsRequest(address) {
     return `https://maps.googleapis.com/maps/api/geocode/json?address=${address.split(' ').join('+')}&key=${API_KEY}`
@@ -111,6 +116,7 @@ function listEvents(events) {
         let item = events.items[i];
         let event = document.createElement('div')
         event.classList.add("event");
+        event.classList.add("line")
         console.log(item);
 
         let date = new Date((item.start.date) ? item.start.date : item.start.dateTime);
@@ -129,7 +135,7 @@ function listEvents(events) {
             upcomingDiv.appendChild(upcomingH);
             event.appendChild(upcomingDiv);
         } else {
-            event.classList.add("line")
+            
         }
         
         let name = document.createElement("div");
@@ -137,8 +143,9 @@ function listEvents(events) {
         let dateString = `${dayNames[date.getDay()]} ${monthNames[date.getMonth()]} ${date.getDate()}`;
         let hour = `${(date.getHours() +1) % 13}`;
         let min = `${date.getMinutes()}`.length === 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
+        let meridiem = `${date.getHours() >= 12 ? "pm" : "am"}`
         //let summary = item.summary ? item.summary : "";
-        name.appendChild(document.createTextNode(`${dateString} - ${hour}:${min}`));
+        name.appendChild(document.createTextNode(`${dateString} - ${hour}:${min} ${meridiem}`));
         event.appendChild(name);
 
         if (item.summary) {
@@ -155,10 +162,6 @@ function listEvents(events) {
             location.href=`${mapsRequest(item.location)}`
             location.appendChild(document.createTextNode(item.location));
             event.appendChild(location);
-        }
-        
-        if (upcomingId && event.classList.contains('upcoming')) {
-            upcomingId.appendChild(event);
         }
 
         if (eventsId) {

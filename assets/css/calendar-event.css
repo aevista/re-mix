@@ -9,9 +9,10 @@
     font-size: 1.4rem;
 }
 
-.upcoming {
-    content: Upcoming;
+#upcoming {
     border: 4px solid #212931;
+    float: clear;
+    margin-right:60%;
     z-index: 1;
 }
 
