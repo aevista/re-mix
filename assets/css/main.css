@@ -3560,7 +3560,7 @@
 	#main {
 		background: lightblue url("../../images/whitenoise.png") repeat fixed center; 
 		background-color: #ffffff;
-		position: relative;
+		position: static;
 		margin: 0 auto;
 		width: calc(100% - 4rem);
 		max-width: 72rem;
