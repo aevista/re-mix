@@ -3071,7 +3071,9 @@
 			opacity: 1;
 		}
 		
-
+		img {
+			image-orientation: from-image;
+		}
 /* Intro */
 
 	#intro {
