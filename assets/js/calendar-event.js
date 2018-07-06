@@ -96,10 +96,9 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
 function listEvents(events) {
-    let upcomingId = document.getElementById('upcoming');
     let eventsId = document.getElementById('events');
     
-    if (events.items.length === 0 && (!upcomingId || !eventsId)) {
+    if (events.items.length === 0 && !eventsId) {
         return;
     }
 
@@ -134,9 +133,6 @@ function listEvents(events) {
             upcomingH.innerHTML = "Upcoming Event";
             upcomingDiv.appendChild(upcomingH);
             event.appendChild(upcomingDiv);
-
-            let upcomingEventDiv = document.getElementById("upcoming-event");
-            upcomingEventDiv.appendChild(upcomingDiv);
         }
     
         let name = document.createElement("div");
