@@ -134,10 +134,11 @@ function listEvents(events) {
             upcomingH.innerHTML = "Upcoming Event";
             upcomingDiv.appendChild(upcomingH);
             event.appendChild(upcomingDiv);
-        } else {
-            
+
+            let upcomingEventDiv = document.getElementById("upcoming-event");
+            upcomingEventDiv.appendChild(upcomingDiv);
         }
-        
+    
         let name = document.createElement("div");
         name.classList.add("name")
         let dateString = `${dayNames[date.getDay()]} ${monthNames[date.getMonth()]} ${date.getDate()}`;
