@@ -96,6 +96,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
 function listEvents(events) {
+    let upcomingId = document.getElementById("upcoming");
     let eventsId = document.getElementById('events');
     
     if (events.items.length === 0 && !eventsId) {
@@ -113,35 +114,20 @@ function listEvents(events) {
 
     for (var i = events.items.length - 1; i >= 0; i--) {
         let item = events.items[i];
-        let event = document.createElement('div')
+        
+        let eventContainer = document.createElement('div');
+        let event = document.createElement('div'); 
         event.classList.add("event");
         event.classList.add("line")
         console.log(item);
 
         let date = new Date((item.start.date) ? item.start.date : item.start.dateTime);
-        
-        if (date.getMonth() === upcoming.getMonth() && 
-            date.getDate() === upcoming.getDate() &&
-            date.getFullYear() === upcoming.getFullYear()
-        ) {
-            
-            event.classList.add("upcoming");
-            let upcomingDiv = document.createElement("div");
-            upcomingDiv.style.float='clear';
-            upcomingDiv.style.marginRight='60%';
-            upcomingH = document.createElement("h2");
-            upcomingH.innerHTML = "Upcoming Event";
-            upcomingDiv.appendChild(upcomingH);
-            event.appendChild(upcomingDiv);
-        }
     
         let name = document.createElement("div");
-        name.classList.add("name")
         let dateString = `${dayNames[date.getDay()]} ${monthNames[date.getMonth()]} ${date.getDate()}`;
         let hour = `${(date.getHours() +1) % 13}`;
         let min = `${date.getMinutes()}`.length === 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
         let meridiem = `${date.getHours() >= 12 ? "pm" : "am"}`
-        //let summary = item.summary ? item.summary : "";
         name.appendChild(document.createTextNode(`${dateString} - ${hour}:${min} ${meridiem}`));
         event.appendChild(name);
 
@@ -161,10 +147,34 @@ function listEvents(events) {
             event.appendChild(location);
         }
 
+        if (isSameDate(date, upcoming)) {
+            
+            let upcomingDiv = document.createElement("div");
+            upcomingDiv.classList.add("upcoming");
+            upcomingDiv.style.float='clear';
+            upcomingDiv.style.marginRight='60%';
+            upcomingH = document.createElement("h2");
+            upcomingH.innerHTML = "Upcoming Event";
+            upcomingDiv.appendChild(upcomingH);
+            eventContainer.appendChild(upcomingDiv);
+        }
+
+        eventContainer.appendChild(event);
+
         if (eventsId) {
-            eventsId.appendChild(event);
+            eventsId.appendChild(eventContainer);
+        }
+
+        if (upcomingId) {
+            eventsId.appendChild(eventContainer);
         }   
     }
+}
+
+function isSameDate(date, upcoming) {
+    return date.getMonth() === upcoming.getMonth() 
+        && date.getDate() === upcoming.getDate()
+        && date.getFullYear() === upcoming.getFullYear()
 }
 
 function mapsRequest(address) {
