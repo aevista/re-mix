@@ -166,7 +166,7 @@ function listEvents(events) {
         }
 
         if (upcomingId) {
-            eventsId.appendChild(eventContainer);
+            upcomingId.appendChild(eventContainer);
         }   
     }
 }
