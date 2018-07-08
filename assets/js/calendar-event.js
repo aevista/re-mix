@@ -15,8 +15,8 @@
  *
  * create this api at: https: //console.developers.google.com
  */
-var API_KEY = 'AIzaSyBE1-e9INUTNqGajutEc-FKa4-q9nQRrWk';
 
+ var API_KEY = 'AIzaSyBE1-e9INUTNqGajutEc-FKa4-q9nQRrWk';
 /**
  * A google calendar ID
  *
@@ -96,10 +96,10 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
 function listEvents(events) {
-    let upcomingId = document.getElementById("upcoming");
+    let upcomingId = document.getElementById('upcoming-event');
     let eventsId = document.getElementById('events');
     
-    if (events.items.length === 0 && !eventsId) {
+    if (events.items.length === 0 || !eventsId) {
         return;
     }
 
@@ -114,21 +114,16 @@ function listEvents(events) {
 
     for (var i = events.items.length - 1; i >= 0; i--) {
         let item = events.items[i];
-        
-        let eventContainer = document.createElement('div');
-        let event = document.createElement('div'); 
-        event.classList.add("event");
-        event.classList.add("line")
-        console.log(item);
-
         let date = new Date((item.start.date) ? item.start.date : item.start.dateTime);
     
-        let name = document.createElement("div");
         let dateString = `${dayNames[date.getDay()]} ${monthNames[date.getMonth()]} ${date.getDate()}`;
         let hour = `${(date.getHours() +1) % 13}`;
-        let min = `${date.getMinutes()}`.length === 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
-        let meridiem = `${date.getHours() >= 12 ? "pm" : "am"}`
+        let min = `${date.getMinutes()}`.length === 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`;
+        let meridiem = `${date.getHours() >= 12 ? "pm" : "am"}`;
+
+        let name = document.createElement("div");
         name.appendChild(document.createTextNode(`${dateString} - ${hour}:${min} ${meridiem}`));
+        let event = document.createElement('div'); 
         event.appendChild(name);
 
         if (item.summary) {
@@ -142,43 +137,43 @@ function listEvents(events) {
             let location = document.createElement('a');
             location.classList.add("location");
             location.classList.add('popup-gmaps');
-            location.href=`${mapsRequest(item.location)}`
+            location.href=`${mapsRequest(item.location)}`;
             location.appendChild(document.createTextNode(item.location));
             event.appendChild(location);
         }
 
-        if (isSameDate(date, upcoming)) {
+        let eventContainer = document.createElement('div');
+        eventContainer.classList.add("event");
+    
+        if (isSameDay(date, upcoming)) {
             
             let upcomingDiv = document.createElement("div");
-            upcomingDiv.classList.add("upcoming");
             upcomingDiv.style.float='clear';
             upcomingDiv.style.marginRight='60%';
             upcomingH = document.createElement("h2");
             upcomingH.innerHTML = "Upcoming Event";
             upcomingDiv.appendChild(upcomingH);
             eventContainer.appendChild(upcomingDiv);
+            eventContainer.appendChild(event);
+            
+            upcomingId.appendChild(eventContainer.cloneNode(true));
+        } else {
+            eventContainer.appendChild(event);
         }
 
-        eventContainer.appendChild(event);
-
-        if (eventsId) {
-            eventsId.appendChild(eventContainer);
-        }
-
-        if (upcomingId) {
-            upcomingId.appendChild(eventContainer);
-        }   
+        eventContainer.classList.add("line")
+        eventsId.appendChild(eventContainer);
     }
 }
 
-function isSameDate(date, upcoming) {
+function isSameDay(date, upcoming) {
     return date.getMonth() === upcoming.getMonth() 
         && date.getDate() === upcoming.getDate()
-        && date.getFullYear() === upcoming.getFullYear()
+        && date.getFullYear() === upcoming.getFullYear();
 }
 
 function mapsRequest(address) {
-    return `https://maps.google.com/maps?q=${address.split(' ').join('+')}`
+    return `https://maps.google.com/maps?q=${address.split(' ').join('+')}`;
 }
 
 
