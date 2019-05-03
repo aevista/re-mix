@@ -26,7 +26,7 @@ var CALENDAR_ID = '2toneband@gmail.com';
 
 /** current date object */
 var now = new Date();
-var from = setDate(d => d.getDate() -12, (d, k) => d.setDate(k))(now);
+var from = now;
 var to = setDate(d => d.getMonth() + 1, (d, k) => d.setMonth(k))(now);
 
 function setDate(getCallback, setCallback) {
@@ -96,7 +96,6 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
 function listEvents(events) {
-    let upcomingId = document.getElementById('upcoming-event');
     let eventsId = document.getElementById('events');
     
     if (events.items.length === 0 || !eventsId) {
@@ -153,7 +152,6 @@ function listEvents(events) {
             eventContainer.appendChild(upcomingDiv);
             eventContainer.appendChild(event);
             
-            upcomingId.appendChild(eventContainer.cloneNode(true));
         } else {
             eventContainer.appendChild(event);
         }
