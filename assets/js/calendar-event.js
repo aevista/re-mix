@@ -103,16 +103,13 @@ function listEvents(events) {
         return;
     }
 
-    let upcoming = Object.keys(events.items).reduce((ds, k) =>  {
-        let item = events.items[k];
-        ds[k] = new Date((item.start.date) ? item.start.date : item.start.dateTime);
-        return ds;
-    }, new Array(events.items.length))
-    .find((date) => date.getMonth() >= now.getMonth() && date.getDate() >= now.getDate());
+    let upcoming = events.items.length === 0 
+        ? new Date()
+        : new Date(events.items[0].start.date ? events.items[0].start.date : events.items[0].start.dateTime);
 
     console.log(events.items);
 
-    for (var i = events.items.length - 1; i >= 0; i--) {
+    for (var i = 0; i < events.items.length; i++) {
         let item = events.items[i];
         let date = new Date((item.start.date) ? item.start.date : item.start.dateTime);
     
